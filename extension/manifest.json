@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Smart Search Assistant",
+  "version": "1.0",
+  "description": "Intelligent search tracking and recommendation system.",
+  "permissions": [
+    "tabs",
+    "webNavigation",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://www.google.com/search*",
+    "*://www.google.co.in/search*",
+    "*://www.bing.com/search*",
+    "*://search.yahoo.com/search*",
+    "*://duckduckgo.com/*",
+    "http://localhost:5000/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
