@@ -52,14 +52,17 @@ app.get('/health', (req, res) => {
 // Database Sync & Server Start
 const startServer = async () => {
   try {
+    httpServer.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+
     await sequelize.authenticate();
     console.log('Connected to MySQL successfully.');
     
-    // For development, sync is easier.
     await sequelize.sync({ alter: false });
     console.log('Database synced.');
 
-    // Auto-Seed Admin User for Render Free Tier (No Shell Access)
+    // Auto-Seed Admin User for Render Free Tier
     const adminExists = await User.findOne({ where: { email: 'admin@example.com' } });
     if (!adminExists) {
       const hashedPassword = await bcrypt.hash('admin123', 10);
@@ -71,10 +74,6 @@ const startServer = async () => {
       });
       console.log('✅ Auto-seeded default Admin account!');
     }
-
-    httpServer.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
