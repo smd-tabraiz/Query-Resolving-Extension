@@ -527,16 +527,17 @@ const AdminAnalytics = () => {
                               </div>
                             ))}
                             
-                            <label className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-slate-700 rounded-xl cursor-pointer hover:border-sky-500/50 hover:bg-sky-500/5 transition-all group">
+                            <label className="relative flex items-center justify-center gap-2 p-4 border-2 border-dashed border-slate-700 rounded-xl cursor-pointer hover:border-sky-500/50 hover:bg-sky-500/5 transition-all group overflow-hidden">
                               <Paperclip className="w-5 h-5 text-slate-500 group-hover:text-sky-400" />
                               <span className="text-sm text-slate-500 group-hover:text-slate-300">Click to attach files</span>
                               <input 
                                 type="file" 
                                 multiple 
-                                className="hidden" 
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
                                 onChange={e => {
-                                  if (e.target.files) {
-                                    setSelectedFiles([...selectedFiles, ...Array.from(e.target.files)]);
+                                  if (e.target.files && e.target.files.length > 0) {
+                                    setSelectedFiles(prev => [...prev, ...Array.from(e.target.files!)]);
+                                    e.target.value = ''; // Reset to allow selecting the same file again
                                   }
                                 }}
                               />

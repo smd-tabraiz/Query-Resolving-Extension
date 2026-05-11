@@ -11,6 +11,8 @@ const transporter = nodemailer.createTransport({
     user: process.env.MAIL_USER || 'sample@ethereal.email',
     pass: process.env.MAIL_PASS || 'samplepassword',
   },
+  connectionTimeout: 5000,
+  socketTimeout: 5000,
 });
 
 export const sendQueryDetails = async (to: string, queryInfo: any, customMessage?: string, attachments?: any[]) => {
