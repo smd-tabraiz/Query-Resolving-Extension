@@ -7,6 +7,8 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import authRoutes from './routes/authRoutes';
 import queryRoutes from './routes/queryRoutes';
+import User from './models/User';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -56,6 +58,19 @@ const startServer = async () => {
     // For development, sync is easier.
     await sequelize.sync({ alter: false });
     console.log('Database synced.');
+
+    // Auto-Seed Admin User for Render Free Tier (No Shell Access)
+    const adminExists = await User.findOne({ where: { email: 'admin@example.com' } });
+    if (!adminExists) {
+      const hashedPassword = await bcrypt.hash('admin123', 10);
+      await User.create({
+        username: 'admin',
+        email: 'admin@example.com',
+        password: hashedPassword,
+        role: 'ADMIN'
+      });
+      console.log('✅ Auto-seeded default Admin account!');
+    }
 
     httpServer.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
