@@ -235,7 +235,7 @@ export const getSearchTrends = async (req: AuthRequest, res: Response) => {
         timestamp: { [Op.gte]: last24h }
       },
       attributes: [
-        [Sequelize.fn('strftime', '%H', Sequelize.col('timestamp')), 'hour'],
+        [Sequelize.fn('DATE_FORMAT', Sequelize.col('timestamp'), '%H'), 'hour'],
         [Sequelize.fn('COUNT', Sequelize.col('id')), 'count']
       ],
       group: ['hour'],
