@@ -5,14 +5,14 @@ const SEARCH_ENGINES = [
   { host: 'duckduckgo.com', param: 'q' }
 ];
 
-const BACKEND_URL = 'http://localhost:5000/api/queries/capture';
+const BACKEND_URL = 'https://query-resolving-extension.onrender.com';
 
 chrome.webNavigation.onCompleted.addListener(async (details) => {
   if (details.frameId !== 0) return;
 
   const url = new URL(details.url);
   const hostname = url.hostname.replace('www.', '');
-  
+
   const engine = SEARCH_ENGINES.find(e => hostname.includes(e.host));
 
   if (engine) {
@@ -27,7 +27,7 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
 async function sendQueryToBackend(query, engine, fullUrl) {
   const result = await chrome.storage.local.get(['authToken']);
   const token = result.authToken;
-  
+
   if (!token) {
     console.warn('[SmartSearch] No auth token. Please log in via the extension popup.');
     return;

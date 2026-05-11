@@ -14,7 +14,7 @@
     "*://www.bing.com/search*",
     "*://search.yahoo.com/search*",
     "*://duckduckgo.com/*",
-    "http://localhost:5000/*"
+    "https://query-resolving-extension.onrender.com/*"
   ],
   "action": {
     "default_popup": "popup.html"
