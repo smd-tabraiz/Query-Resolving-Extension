@@ -1,11 +1,6 @@
-import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY || '',
-});
 
 export const analyzeQuery = async (query: string) => {
   const apiKey = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
@@ -19,6 +14,11 @@ export const analyzeQuery = async (query: string) => {
   }
 
   try {
+    const { GoogleGenAI } = await import('@google/genai');
+    const ai = new GoogleGenAI({
+      apiKey: apiKey || '',
+    });
+
     const prompt = `You are an AI assistant that analyzes user search queries.
 Analyze this search query: "${query}"
 

@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
 import { AuthRequest } from '../middleware/auth';
 import SearchQuery from '../models/SearchQuery';
@@ -152,6 +151,7 @@ export const getInterestClusters = async (req: AuthRequest, res: Response) => {
     const apiKey = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
     if (!queryTexts || !apiKey) throw new Error("No queries or missing API KEY");
 
+    const { GoogleGenAI } = await import('@google/genai');
     const ai = new GoogleGenAI({ apiKey });
 
 
