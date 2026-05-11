@@ -1,4 +1,4 @@
-const BACKEND_URL = 'http://localhost:5000/api/auth/login';
+const BACKEND_URL = 'https://query-resolving-extension.onrender.com/api/auth/login';
 
 const loginSection = document.getElementById('loginSection');
 const statusSection = document.getElementById('statusSection');
