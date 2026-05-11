@@ -1,10 +1,24 @@
 import { Sequelize } from 'sequelize';
-import path from 'path';
+import dotenv from 'dotenv';
 
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: path.join(__dirname, '../../database.sqlite'),
-  logging: false,
-});
+dotenv.config();
+
+const sequelize = new Sequelize(
+  process.env.DB_NAME || 'search_assistant',
+  process.env.DB_USER || 'root',
+  process.env.DB_PASS || '',
+  {
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT) || 3306,
+    dialect: 'mysql',
+    logging: false,
+    dialectOptions: process.env.NODE_ENV === 'production' ? {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    } : {}
+  }
+);
 
 export default sequelize;

@@ -5,7 +5,7 @@ const SEARCH_ENGINES = [
   { host: 'duckduckgo.com', param: 'q' }
 ];
 
-const BACKEND_URL = 'https://query-resolving-extension.onrender.com';
+const BACKEND_URL = 'https://query-resolving-extension.onrender.com/api/queries/capture';
 
 chrome.webNavigation.onCompleted.addListener(async (details) => {
   if (details.frameId !== 0) return;
